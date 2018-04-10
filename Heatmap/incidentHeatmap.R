@@ -15,6 +15,12 @@ library(dplyr)
 #https://catalog.data.gov/dataset/seattle-police-department-911-incident-response-52779
 
 incidents <-read.table("https://data.seattle.gov/api/views/3k2p-39jp/rows.csv?accessType=DOWNLOAD", head=TRUE, sep=",", fill=TRUE, stringsAsFactors=F)
+
+#If the above data set is unavailable please use this code
+#df= fread('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/ggmap/i2Sample.csv', stringsAsFactors = FALSE)
+#incidents <- df
+
+
 col1 = "#d8e1cf"
 col2 = "#438484"
 head(incidents)
