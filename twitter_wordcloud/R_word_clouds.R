@@ -90,11 +90,11 @@ download.file(url, resistance) # download file
 
 #plots
 wordcloud2(hmtTable, size=1.6, figPath = handmaiden, color=rep_len( redPalette, nrow(hmtTable) ) )
-wordcloud2(hmtTable, size=1.6, figPath = resistance, color=rep_len( redPalette, nrow(summary4) ) )
+wordcloud2(hmtTable, size=1.6, figPath = resistance, color=rep_len( redPalette, nrow(hmtTable) ) )
 wordcloud2(hmtTable, size=1.6, figPath = resistance, color="#B20000")
 
 #extras
-wordcloud2(hmtTable, size=0.7, color=rep_len( redPalette, nrow(summary4) ))
+wordcloud2(hmtTable, size=0.7, color=rep_len( redPalette, nrow(hmtTable) ))
 #use a letter or word
 letterCloud(hmtTable, word = "HMT", size = 3)
 
