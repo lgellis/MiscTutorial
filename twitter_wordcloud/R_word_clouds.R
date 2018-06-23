@@ -144,7 +144,7 @@ greyPalette <- c("#2B2B2B", "#373D3F", #333333", "#303030", "#404040", "#484848"
                  #444444", "#555555", "#666666", "#777777", "#888888", "#999999")
 greyPalette
 
-wordcloud2(westWorld, size=0.6, shape = "star", color=rep_len( greyPalette, nrow(summary4) ))
+wordcloud2(westWorld, size=0.6, shape = "star", color=rep_len( greyPalette, nrow(westWorld) ))
 ?wordcloud2
 
 #download maze
