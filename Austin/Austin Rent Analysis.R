@@ -42,6 +42,15 @@ write.csv(aD2,'aD2.csv')
 #Export the graph
 p + ggsave("aD2Plot.pdf")
 
+###Export code for notebooks
 
+#export to csv
+write.csv(aD2,"aD2Data.csv")
+project$save_data('aD2Data.csv',"aD2Data.csv", overwrite=TRUE)
+
+
+#Export the graph
+p + ggsave("aD2LineGraph.pdf")
+project$save_data('aD2LineGraph.pdf',"aD2LineGraph.pdf",overwrite=TRUE)
 
 
