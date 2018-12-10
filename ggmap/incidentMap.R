@@ -3,7 +3,6 @@
 
 install.packages("lubridate")
 install.packages("ggplot2")
-install.packages("ggmap")
 install.packages("data.table")
 install.packages("ggrepel")
 install.packages("dplyr")
@@ -11,7 +10,6 @@ install.packages("dplyr")
 
 library(lubridate)
 library(ggplot2)
-library(ggmap)
 library(dplyr)
 library(data.table)
 library(ggrepel)
@@ -30,13 +28,13 @@ library(ggrepel)
 #write.csv(i2Sample, "i2Sample.csv")
 
 #If the above data set is unavailable please use this code
-df= fread('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/ggmap/i2Sample.csv', stringsAsFactors = FALSE)
+df= read.csv('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/ggmap/i2Sample.csv', stringsAsFactors = FALSE)
 incidents <- df
 
 #2) Download the extra data set with the most dangerous Seattle cities as per:
 # https://housely.com/dangerous-neighborhoods-seattle/
 
-n <- fread('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/ggmap/n.csv', stringsAsFactors = FALSE)
+n <- read.csv('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/ggmap/n.csv', stringsAsFactors = FALSE)
 
 # Look at the data sets
 dim(incidents)
@@ -59,8 +57,10 @@ incidents$ymd <-mdy_hms(Event.Clearance.Date)
 incidents$year <- year(incidents$ymd)
 
 unique(incidents$year)
+
 #Create a more manageable data frame with only 2017 and 2018 data
-i2 <- incidents[year>=2017 & year<=2018, ]
+i2 <- incidents %>% 
+  filter(year>=2017 & year<=2018)
 
 #Only include complete cases
 i2[complete.cases(i2), ]
@@ -73,6 +73,21 @@ attach(n)
 
 head(i2)
 head(n)
+
+####################  GGMap Install and Load #################### 
+
+#More Q&A - https://github.com/dkahle/ggmap/issues/51
+
+#Get the latest Install
+
+if(!requireNamespace("devtools")) install.packages("devtools")
+devtools::install_github("dkahle/ggmap", ref = "tidyup", force=TRUE)
+library("ggmap")
+ggmap::register_google(key = "SET YOUR KEY HERE")
+
+#If you get a failure then pls restart R and run the library and register google commands again.
+
+
 
 ####################  Maps #################### 
 
