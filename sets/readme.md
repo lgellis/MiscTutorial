@@ -4,6 +4,35 @@ Install and Load Packages
 Round 1: Simple and Fun Set Intersection
 ----------------------------------------
 
+``` r
+#Data
+expressionInput <- c(`#rstats` = 5, memes = 5, `#rstats&memes`=3)
+
+#Venn
+#note on set up for java v11 jdk (v12 does not work with this)
+myExpVenn <- venneuler(expressionInput)
+plot(myExpVenn, main = "Why I Love Twitter", sub = "@littlemissdata")
+
+#UpsetR
+upset(fromExpression(expressionInput), order.by = "freq")
+```
+
+![](readme_files/figure-markdown_github/unnamed-chunk-1-1.png)
+
+``` r
+grid.text(
+  "Why I Love Twitter @littlemissdata",
+  x = 0.80,
+  y = 0.05,
+  gp = gpar(
+    fontsize = 10,
+    fontface = 3
+  )
+) #grid hack from https://github.com/hms-dbmi/UpSetR/issues/76
+```
+
+![](readme_files/figure-markdown_github/unnamed-chunk-1-2.png)
+
 Bring in Data
 -------------
 
@@ -98,4 +127,49 @@ I have taken it and reformatted, to include general questions relating to the pe
 </tbody>
 </table>
 
-    volunteerParticipation
+    volunteerParticipation                                                          
+
+``` r
+sets <- read.csv(file="https://raw.githubusercontent.com/lgellis/MiscTutorial/master/sets/seniorTransportation.csv",
+                      header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+#Some formatting
+
+head(sets)
+```
+
+    ##   ID     physicalActivity volunteerParticipation difficultFinancial
+    ## 1  1  At least once a day                  Never                 No
+    ## 2  2 At least once a week                                        No
+    ## 3  3  At least once a day  At least once a month                 No
+    ## 4  4  At least once a day  At least once a month                 No
+    ## 5  5  At least once a day  At least once a month                 No
+    ## 6  6  At least once a day                  Never                 No
+    ##   supportSystem postalCode   employmentStatus    sex primaryLanguage
+    ## 1           Yes        m4S            Retired Female         English
+    ## 2           Yes        M3h            Retired                       
+    ## 3           Yes        m6c            Retired   Male         English
+    ## 4           Yes        1z4            Retired Female         English
+    ## 5           Yes        3A9            Retired Female                
+    ## 6           Yes        3B4 Employed full-time   Male           Farsi
+    ##      ageRange ttcTransportation walkTransportation driveTransportation
+    ## 1 70-74 years                 1                  1                  NA
+    ## 2                             1                 NA                  NA
+    ## 3 70-74 years                 1                 NA                   1
+    ## 4 70-74 years                 1                  1                   1
+    ## 5 70-74 years                NA                  1                   1
+    ## 6 55-59 years                NA                 NA                   1
+    ##   cycleTransportation taxiTransportation communityRideTransportation
+    ## 1                  NA                 NA                          NA
+    ## 2                  NA                 NA                          NA
+    ## 3                  NA                 NA                          NA
+    ## 4                  NA                 NA                          NA
+    ## 5                  NA                 NA                          NA
+    ## 6                  NA                 NA                          NA
+    ##   wheelTransTransportation friendsTransportation
+    ## 1                       NA                    NA
+    ## 2                        1                    NA
+    ## 3                       NA                    NA
+    ## 4                       NA                    NA
+    ## 5                       NA                     1
+    ## 6                       NA                    NA
