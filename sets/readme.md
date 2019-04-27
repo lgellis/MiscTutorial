@@ -98,6 +98,4 @@ I have taken it and reformatted, to include general questions relating to the pe
 </tbody>
 </table>
 
-    volunteerParticipation                                                          
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+    volunteerParticipation
