@@ -391,7 +391,7 @@ grid.text(
 
 ### Provide Context with Additional Graphs Called "Attribute Plots"
 
-**Display an in context box plot of age for each set using boxplot.summary() function **
+**Display an in context box plot of age for each set using boxplot.summary() function**
 
 Attribute plots are an awesome way of displaying information about the rest of the data set within the context of the sets or the queries previously defined. More information can be found in the [excellent package tutorial.](https://cran.r-project.org/web/packages/UpSetR/vignettes/queries.html)
 
