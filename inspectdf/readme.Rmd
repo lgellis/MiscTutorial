@@ -1,0 +1,165 @@
+---
+title: "Easy EDA in R using the inspectdf package"
+author: Laura Ellis
+date: May 15 2019
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Install and load the inspectdf package
+
+I like this package because it’s got a lot of functionality and it’s incredibly straightforward. In short it allows you to understand and visualize column types, sizes, values, value imbalance & distributions as well as correlations.  Further to this, it allows you to very easily perform any of the above features for an individual data frame, or to compare the differences between two data frames.  
+
+```{r setup, include=FALSE}
+
+#First install devtools to allow you to install inspectdf from github
+#install.packages("devtools")
+library(devtools)
+
+# install and load the package - https://github.com/alastairrushworth/inspectdf
+
+#devtools::install_github("alastairrushworth/inspectdf")
+library(inspectdf)
+
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+# Download the data Set from the previous [EDA blog](https://www.littlemissdata.com/blog/simple-eda)
+
+```{r}
+#Load the readr library to bring in the dataset
+#install.packages("readr")
+library(readr)
+
+#Download the data set
+df= read_csv('https://raw.githubusercontent.com/lgellis/STEM/master/DATA-ART-1/Data/FinalData.csv', col_names = TRUE)
+
+#Quick view of the data frame
+head(df, 10)
+dim(df)
+```
+
+# Create the necessary data frames
+
+We need three data frames.  We need one data frame with the complete data set.  We simply rename df to allGrades. We also need two subsetted data sets to leverage the packages easy data frame comparison features.  We create the data frames oldGrades (6-8) and youngGrades (3-5).
+```{r}
+allGrades <- df
+
+oldGrades <- allGrades %>% 
+  filter(Grade > 5)
+
+youngGrades <- allGrades %>% 
+  filter(Grade < 6)
+
+ggplot(oldGrades, aes(x=Grade)) + geom_histogram()
+ggplot(youngGrades, aes(x=Grade)) + geom_histogram()
+
+```
+
+# Run through the functions of the inspectdf package
+
+Simply pass in a dataframe, or two (for comparisons) and set show_plot = TRUE.  The output will include both a tibble with the raw data and a visualization.  
+
+## 1 Evaluate the data frame column types with the inspect_types() function
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_types(allGrades, show_plot = TRUE)
+```
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_types(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+## 2 Evaluate the data frame column memory usage with the inspect_mem() function
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_mem(allGrades, show_plot = TRUE)
+```
+
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_mem(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+## 3 Evaluate the na prevelance within the data frame with the inspect_na() function
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_na(allGrades, show_plot = TRUE)
+```
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_na(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+
+## 4 Evaluate the distribution of the numerical columns with the inspect_num() function
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_num(allGrades, show_plot = TRUE)
+```
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_num(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+## 5 Evaluate for any possible categorical column imbalance with inspect_imb() function to identify factors which might be overly prevalent.
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_imb(allGrades, show_plot = TRUE)
+```
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_imb(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+## 6 Evaluate the categorical column distribution with the inspect_cat() function
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_cat(allGrades, show_plot = TRUE)
+```
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_cat(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+## 7 Evaluate the column correlations with the inspect_cor() function
+
+### a) Evaluate the full data frame: allGrades
+
+```{r}
+inspect_cor(allGrades, show_plot = TRUE)
+```
+
+### b) Compare between youngGrades and oldGrades
+
+```{r}
+inspect_cor(youngGrades, oldGrades, show_plot = TRUE)
+```
+
+
