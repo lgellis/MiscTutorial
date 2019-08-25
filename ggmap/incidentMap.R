@@ -213,19 +213,11 @@ p + stat_density2d(
 #use maptype = roadmap, terrain, hybrid, satelitte
 
 #9a) roadmap + black geom_point
-ggmap(get_googlemap(center = c(lon = -122.335167, lat = 47.608013),
-                    zoom = 13, scale = 2,
-                    maptype ='roadmap',
-                    color = 'color')) +   
-  geom_point(aes(x = Longitude, y = Latitude), colour = "black", data = i2, alpha=0.3, size = 0.5) + 
+p +  geom_point(aes(x = Longitude, y = Latitude), colour = "black", data = i2, alpha=0.3, size = 0.5) + 
   theme(legend.position="none")
 
 #9b) satellite + red geom_point
-ggmap(get_googlemap(center = c(lon = -122.335167, lat = 47.608013),
-                    zoom = 13, scale = 2,
-                    maptype ='satellite',
-                    color = 'color')) +   
-  geom_point(aes(x = Longitude, y = Latitude), colour = col4, data = i2, alpha=0.3, size = 0.5) + 
+p + geom_point(aes(x = Longitude, y = Latitude), colour = col4, data = i2, alpha=0.3, size = 0.5) + 
   theme(legend.position="none")
 
 
