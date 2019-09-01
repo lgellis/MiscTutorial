@@ -50,7 +50,7 @@ head(df)
 #ggmap::register_google(key = "ENTER_YOUR_API_KEY")
 ```
 
-Convert UTM to Lat and Long
+Convert UTM to lat and long
 ---------------------------
 
 One thing that really confused me was trying to understand what the x and y coordinates were representing in the open data. After looking at their Q&A I realized that they are in Universal Transverse Mercator (UTM) format.
@@ -139,7 +139,7 @@ p + geom_image(aes(x = Lon, y = Lat, image=Image), data = df2, size = 0.05) +
 ![](iconMap_NoKey_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 Make the images more aesthetically pleasing. Make all images transparent, save and re-upload to GH
-==================================================================================================
+--------------------------------------------------------------------------------------------------
 
 Use the "Magick" package to make each image transparent with image\_transparent(). Make the resulting image a specific color with image\_colorize().
 
@@ -175,7 +175,7 @@ p + geom_image(aes(x = Lon, y = Lat, image=Image), data = df2, size = 0.06) +
   theme(legend.position="bottom") 
 ```
 
-![](iconMap_NoKey_files/figure-markdown_github/unnamed-chunk-5-1.png) \# Create a different version using 'stamen' and 'terrain-lines'
+![](iconMap_NoKey_files/figure-markdown_github/unnamed-chunk-5-1.png) \#\# Create a different version using 'stamen' and 'terrain-lines'
 
 Make the same plot, but swap out the base plot image with the 'stamen' 'terrain-lines' version. I think that this a really cool way of looking at it as it represents the subdividions more clearly.
 
@@ -217,7 +217,7 @@ qmap(center, zoom = 12, source = "stamen", maptype = "terrain-lines") +
 ![](iconMap_NoKey_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
 Create a better version using 'stamen' and 'terrain'
-====================================================
+----------------------------------------------------
 
 Now swap out 'terrain-lines' mapping parameter for 'terrain'. I think this is my favorite version as it nicely balances showing green space and street lines very clearly at a distance.
 
