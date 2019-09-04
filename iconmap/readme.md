@@ -1,7 +1,7 @@
 Introduction
 ------------
 
-The full icon map tutorial is available [here](https://www.littlemissdata.com/blog/iconmap)
+The full icon map tutorial is available [here](https://www.littlemissdata.com/blog/iconmap).
 
 Previously I have [written a tutorial on how to use ggmap with R.](https://www.littlemissdata.com/blog/maps) It shows the end to end of how to get started with using ggmaps, including signing up for the google service.
 
