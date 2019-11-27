@@ -108,7 +108,7 @@ We are going to bring in a data set which has the start dates for every single s
 
 ```{r}
 ## Add lollipops
-x <-read.csv("/Users/lgellis/Desktop/Files/Cloud/littlemissdata/gtrends/bachelorListing.csv", stringsAsFactors = FALSE)
+x <-read.csv("https://raw.githubusercontent.com/lgellis/MiscTutorial/master/gtrendsR/bachelorListing.csv", stringsAsFactors = FALSE)
 
 # Turn the dates into proper dates.  
 #Ratings are only tracked on sundays so get the closest Sunday for ratings

@@ -57,14 +57,13 @@ Select the data frame for interest by state and then convert the names of the st
 ```{r }
 
 thanksgivingStates <- thanksgiving$interest_by_region
-thanksgivingStates
 
 #The usmap requires the data in FIPS format.
 # To gather the FIPS data, use the fips() function to convert state name to code
 #https://www.rdocumentation.org/packages/cdlTools/versions/0.14/topics/fips
 
 thanksgivingStates$fips <-fips(thanksgivingStates$location)
-head(thanksgivingStates)
+
 ```
 
 ## Plot interest with the US Map by state
