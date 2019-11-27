@@ -105,7 +105,7 @@ bachTrends <- gtrends(c("Bachelor in Paradise", "The Bachelor", "The Bachelorett
 plot(bachTrends)
 ```
 
-![](readme_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](gtrends_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
 bachTrendsInterest <- bachTrends$interest_over_time
@@ -147,7 +147,7 @@ p <- ggplot() +
 p
 ```
 
-![](readme_files/figure-markdown_github/unnamed-chunk-5-1.png)
+![](gtrends_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 Create an animation
 ===================
@@ -179,7 +179,7 @@ gif <- animate(t, end_pause = 25, width = 800, height = 400, fps = 8)
 gif
 ```
 
-![](readme_files/figure-markdown_github/unnamed-chunk-6-1.gif)
+![](gtrends_files/figure-markdown_github/unnamed-chunk-6-1.gif)
 
 ``` r
 anim_save("Bachelor trends", gif)
@@ -286,4 +286,4 @@ p <- ggplot() +
 p
 ```
 
-![](readme_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](gtrends_files/figure-markdown_github/unnamed-chunk-9-1.png)
