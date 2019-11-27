@@ -47,7 +47,6 @@ Use the [gTrendsR Package](https://cran.r-project.org/web/packages/gtrendsR/gtre
 
 ```{r}
 thanksgiving <- gtrends("thanksgiving",geo = "US", time = "now 1-d") # last day
-head(thanksgiving)
 ```
 
 ## Gather Interest by State
