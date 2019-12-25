@@ -1,0 +1,86 @@
+---
+title: "Happy Holidays 2019"
+author: Laura Ellis
+date: Dec 24 2019
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Load all packages
+
+```{r}
+library(data.table)
+library(tidyverse)
+library(gganimate)
+library(ggimage)
+library(magick)
+library(gifski)
+```
+
+# Download the data
+
+Csv created with a tool called [coordinator](https://spotify.github.io/coordinator/), by [Aliza Aufrichtig](https://twitter.com/alizauf).  It allows us to convert SVG graphics to data co-ordinates
+
+```{r}
+df= fread('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/Holidays/Holidays.csv', stringsAsFactors = FALSE)
+```
+
+#Create the Plot
+
+Classic ggplot scatterplot.  Remove all lines an chart aspects with theme_void.  Increase the chart size beyond the plotted points using the xlim() and ylim() functions.  This will allow us to nicely center the text on our background image. 
+
+```{r}
+# Basic scatter plot
+p <-ggplot(df, aes(x=x, y=y)) +
+  geom_point(colour = '#BF0000', size = 0.3) +
+   xlim(0, 18000) +
+   ylim(0, 10000) +
+   theme_void()
+p
+
+```
+
+
+# Add the background Holiday Image
+
+Add the holiday background using the ggbackground funcion in the ggimage package.  I got this tip from a [great blog post](https://guangchuangyu.github.io/2018/04/setting-ggplot2-background-with-ggbackground/) by [Guangchuang Yu](https://guangchuangyu.github.io/)
+
+```{r}
+
+img <- "https://raw.githubusercontent.com/lgellis/MiscTutorial/master/Holidays/%20background.jpg"
+imgRead <- image_read(img)
+ggbackground(p, img)
+
+```
+
+
+
+# Animation
+
+Create the animation with the gganimate package.  Use transition_manual vs transition_reveal because it allows us to specify cumulative=TRUE to keep all data already shown.  
+
+
+```{r}
+t <-ggplot(df, aes(x=x, y=y)) +
+   theme_void() + 
+   theme(plot.background = element_rect(fill = '#CA302F')) +
+   geom_point(colour = 'white', size = 1) +
+   transition_manual(as.numeric(x), cumulative=TRUE) 
+
+```
+
+
+# Save a gif
+
+Use the gifski package to save the gif. 
+
+```{r}
+
+gif <- animate(t, end_pause = 25, width = 800, height = 400, fps = 8)
+gif
+anim_save("HappyHolidays.gif", gif)
+
+```
+
+
