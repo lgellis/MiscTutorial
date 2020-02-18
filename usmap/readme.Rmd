@@ -71,7 +71,7 @@ Create a US heatmap with google search popularity for the keyword "thanksgiving"
 
 ```{r }
 
-plot_usmap(data = thanksgivingStates, values = "hits",  color = orange, labels=FALSE) + 
+plot_usmap(data = thanksgivingStates, values = "hits",  color = orange, labels=TRUE) + 
   scale_fill_continuous( low = "white", high = orange, 
                          name = "Popularity", label = scales::comma
   ) + 
@@ -89,7 +89,7 @@ Drill in on the seemingly most popular regions using the "include" parameter in 
 
 ```{r }
 
-plot_usmap(data = thanksgivingStates, values = "hits", include =  c(.south_atlantic, .mid_atlantic), color = orange, labels=TRUE) + 
+plot_usmap(data = thanksgivingStates, values = "hits", include =  c(.south_atlantic, .east_north_central), color = orange, labels=TRUE) + 
   scale_fill_continuous( low = "white", high = orange, 
                          name = "Popularity", label = scales::comma
   ) + 
