@@ -15,7 +15,7 @@ July 12th, 2018
 | ------- | ------------- | ------------- |
 | xyz    | xyz | xyz |
 | xyz    | xyz | xyz |
-                                                                                           |
+
 
 ## When Does the Data Load?
 
