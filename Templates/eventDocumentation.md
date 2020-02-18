@@ -1,9 +1,5 @@
----
-title: Button Click
----
 
--
-{:toc}
+# Event: Button Click
 
 ## What Is It?
 
@@ -15,12 +11,11 @@ July 12th, 2018
 
 ### What attributes are tracked?
 
-| Attribute                   | Description                                                                                                                                          |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| example 1                    | description 1                                                                                                                                 |
-| example 2                    | description 2                                                                                                                                 |
-| example 3                    | description 3                                                                                                                                 |
-                                                                                               |
+| Attribute   | Description   | Examples  |
+| ------- | ------------- | ------------- |
+| xyz    | xyz | xyz |
+| xyz    | xyz | xyz |
+                                                                                           |
 
 ## When Does the Data Load?
 
