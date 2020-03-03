@@ -16,7 +16,7 @@ Thank you to "Dusty" who posted the package "easypackages" on my [last tutorial]
 ```{r}
 #install.packages("easypackages")
 library(easypackages)
-packages("tidyverse", "rtweet", "tidytext", "rtweet", "wordcloud2", "patchwork", "cran.stats", "data.table", 
+packages("tidyverse", "rtweet", "tidytext", "rtweet", "patchwork", "cran.stats", "data.table", 
          "gameofthrones", "ggimage", "magick", "ggpubr", "jpeg", "png")
 
 ```
@@ -134,8 +134,6 @@ rtweet_table2 <- rtweet_table %>%
   count(word, sort = TRUE) %>%
   filter(!word %in% c('t.co', 'https'))
 
-wc <-wordcloud2(rtweet_table2, size=0.7, color=rep_len(pal, nrow(rtweet_table2) ) )
-wc 
 
 p2 <- rtweet_table2 %>%
   filter(n> 50) %>%

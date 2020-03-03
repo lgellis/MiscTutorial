@@ -10,7 +10,7 @@ tutorial](https://www.littlemissdata.com/blog/bacheloranalysis)
 ``` r
 #install.packages("easypackages")
 library(easypackages)
-packages("tidyverse", "rtweet", "tidytext", "rtweet", "wordcloud2", "patchwork", "cran.stats", "data.table", 
+packages("tidyverse", "rtweet", "tidytext", "rtweet", "patchwork", "cran.stats", "data.table", 
          "gameofthrones", "ggimage", "magick", "ggpubr", "jpeg", "png")
 ```
 
@@ -37,8 +37,6 @@ packages("tidyverse", "rtweet", "tidytext", "rtweet", "wordcloud2", "patchwork",
     ##     flatten
 
     ## Loading required package: tidytext
-
-    ## Loading required package: wordcloud2
 
     ## Loading required package: patchwork
 
@@ -280,13 +278,6 @@ rtweet_table2 <- rtweet_table %>%
     ## Joining, by = "word"
 
 ``` r
-wc <-wordcloud2(rtweet_table2, size=0.7, color=rep_len(pal, nrow(rtweet_table2) ) )
-wc 
-```
-
-![](patchwork_files/figure-markdown_github/unnamed-chunk-7-1.png)
-
-``` r
 p2 <- rtweet_table2 %>%
   filter(n> 50) %>%
   mutate(word = reorder(word, n)) %>%
@@ -300,7 +291,7 @@ p2 <- rtweet_table2 %>%
 p2
 ```
 
-![](patchwork_files/figure-markdown_github/unnamed-chunk-7-2.png)
+![](patchwork_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 3rd Plot - Plot the patchwork CRAN download stats
 -------------------------------------------------
