@@ -1,0 +1,294 @@
+---
+title: "Patchwork"
+author: "Laura Ellis"
+date: "3/2/2020"
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Set Up
+
+## Install and load all the packages
+
+Thank you to "Dusty" who posted the package "easypackages" on my [last tutorial](https://www.littlemissdata.com/blog/bacheloranalysis)
+
+```{r}
+#install.packages("easypackages")
+library(easypackages)
+packages("tidyverse", "rtweet", "tidytext", "rtweet", "wordcloud2", "patchwork", "cran.stats", "data.table", 
+         "gameofthrones", "ggimage", "magick", "ggpubr", "jpeg", "png")
+
+```
+
+
+## Set up our colour palette
+
+Using the beautiful Game of Thrones color palette from [Alejandro Jiménez](https://twitter.com/aljrico) in his ["gameofthrones" package.](https://github.com/aljrico/gameofthrones).  Thank you to [Divya Seernani](https://twitter.com/DSeernani) for sharing!
+```{r}
+
+#Set the palette using the beautiful GOT Arya palette from Alejandro Jiménez
+pal <- got(20, option = "Arya")
+
+#cherry pick a few extended
+c <-"#889999"
+c2 <- "#AAB7AF"
+```
+
+## Add your twitter credentials
+Create your twitter authentication token by following the steps in [Michael Kearneys](https://mikewk.com/) [beautiful documentation](https://rtweet.info/articles/auth.html).  Replace the "ADD YOUR CREDS" with your own credentials. 
+
+```{r}
+#create_token(
+#  app = "ADD YOUR CREDS",
+#  consumer_key = "ADD YOUR CREDS",
+#  consumer_secret = "ADD YOUR CREDS")
+```
+
+# Create Plots
+
+## 1st Plot - Create a plot of the tweet stats (favorites, retweets)
+
+### Lookup the tweet and view stats
+
+
+```{r}
+lt <-lookup_tweets('1229176433123168256')
+lt
+```
+
+### Create a chart with the tweet stats
+
+```{r}
+p1 <- lt %>% 
+  rename(Faves = favorite_count, RTs = retweet_count) %>% 
+  select(Faves, RTs) %>%  #select only the desired columns
+  gather("stat", "value") %>%  #reformat to make the table long which is easier for bar charts to consume
+  ggplot(aes(stat, value)) +  #plot the bar chart
+  geom_bar(stat="identity", fill=c2) +
+  theme_classic() + 
+  labs(title = "Tweet Stats",
+                           x = "Tweet Statistic", y = "Total")  
+
+p1
+```
+
+
+## 2nd Plot - Create a plot of the tweet stats (favorites, retweets)
+
+### Gather approx 1K of the retweet data
+
+The [get_retweets()](https://rtweet.info/reference/get_retweets.html) function only allows a max of 100 retweets to be pulled via the API at a time. This is a rate imposed by the twitter API.  When pulling this data, I had quite a difficult time.  Not only, did a lot of the suggested methods to getting cursors fail, the rate limiting wasn't consistent.  Sometimes I was able to get close to 1K tweets in 100 batches.  Sometimes it blocked me for 15 min intervals (as expected).  Since this is just an example to show patchwork, I decided to just grab 1K of the retweets which is roughly half of the full set of retweets.  Further, I should let you know that I did attempt to put it in a function, but I couldn't find an appropriate system wait time that would complete in a reasonable time and/or actually return the data.  Please reach out if you have a better/proven method! In the meantime, here is my brute force method.
+
+```{r}
+
+statusid <- '1229176433123168256' #set the first lowest retweet statusid to be the id of the original tweet
+rtweets <- get_retweets(statusid, n=100, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets$status_id)
+
+rtweets2 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets2$status_id)
+
+rtweets3 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets3$status_id)
+
+rtweets4 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets4$status_id)
+
+rtweets5 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets5$status_id)
+
+rtweets6 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets6$status_id)
+
+rtweets7 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets7$status_id)
+
+rtweets8 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets8$status_id)
+
+rtweets9 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets9$status_id)
+
+rtweets10 <- get_retweets(statusid, n=100, max_id = min_id, parse = TRUE) # get 100 retweets
+min_id <- min(rtweets10$status_id)
+
+rtweet_table <-rbind(rtweets, rtweets2, rtweets3, rtweets4, rtweets5, rtweets6, rtweets7, rtweets8, rtweets9, rtweets10)
+nrow(rtweet_table)
+length(unique(rtweet_table$description))
+
+```
+
+### Graph the most common words used in the retweeters profile descriptions
+
+Most of the techniques used below to process the data and graph the data are taken from the [tidy text mining](https://www.tidytextmining.com/) book by [Julia Silge](https://twitter.com/juliasilge) and [David Robinson](https://twitter.com/drob)
+
+
+```{r}
+
+data(stop_words)
+#Unnest the words - code via Tidy Text
+rtweet_table2 <- rtweet_table %>% 
+  unnest_tokens(word, description) %>% 
+  anti_join(stop_words) %>% 
+  count(word, sort = TRUE) %>%
+  filter(!word %in% c('t.co', 'https'))
+
+wc <-wordcloud2(rtweet_table2, size=0.7, color=rep_len(pal, nrow(rtweet_table2) ) )
+wc 
+
+p2 <- rtweet_table2 %>%
+  filter(n> 50) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(word, n)) +
+  theme_classic() +
+  geom_col(fill= c) +
+  labs(title = "RT Profiles",
+       x = "Key Words", y = "Total Occurances")  +
+  coord_flip() 
+
+p2
+```
+
+
+
+## 3rd Plot - Plot the patchwork CRAN download stats
+
+### Gather the data
+
+To download the patchwork download stats, I used the ["cran.stats" package](https://www.rdocumentation.org/packages/cran.stats/versions/0.1).  The examples to process the download stats were very easy and I just followed the [examples here](https://cran.r-project.org/web/packages/dlstats/vignettes/dlstats.html#download-stats-of-cran-packages).
+
+```{r}
+
+dt = read_logs(start = as.Date("2020-02-01"), 
+               end = as.Date("2020-02-29"), 
+               verbose = TRUE)
+dim(dt)
+
+patchwork <- stats_logs(dt, type="daily", packages=c("patchwork"), 
+                        dependency=TRUE, duration = 30L)
+```
+
+
+### Plot the CRAN download data
+
+Using the ggplot, geom_line() function with just a little extra fancyness to annotate the graph with the annotate() function.  Great annotation examples [here](https://ggplot2.tidyverse.org/reference/annotate.html)
+
+```{r}
+p3 <- ggplot(patchwork, aes(x=key, y=tot_N, group=1)) +
+  geom_line() + theme_classic() + theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
+  ylim(0, 1500) + 
+  labs(title = "Downloads of the R Patchwork Package",
+       x = "Date", y = "Total Downloads") + 
+  annotate("rect", xmin = "2020-02-16", xmax = "2020-02-20", ymin = 400, ymax = 900,
+           alpha = .3, fill = c2)  +
+  annotate(
+    geom = "curve", alpha = 0.3, x = "2020-02-14", y = 650, xend = "2020-02-17", yend = 800, 
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(geom = "text", x = "2020-02-07", y = 650, label = "Nerd viral #rstats tweet", hjust = "left", alpha = 0.5)
+
+p3
+
+```
+
+
+# Add the plots to the same graphic using patchwork
+
+As is the focus of this post, when this package was [shared on twitter](https://twitter.com/LittleMissData/status/1229176433123168256), people were very excited about it.  The [patchwork package](https://github.com/thomasp85/patchwork) was created by [Thomas Lin Pedersen](https://twitter.com/thomasp85).  Not only is it incredibly easy to use, it comes with great [documentation](https://patchwork.data-imaginist.com/index.html)
+
+## Try a few layouts
+
+Using the plots p1, p2, p3 created above, try a few layouts following the package documentation
+
+```{r}
+p1/p2/p3
+p1 + p2 + p3
+p1/ (p2 +p3)
+
+#Final Layout
+p <- p3 / (p1 + p2)
+p
+```
+
+## Annotate the final layout
+
+We will select the final layout from the above code block and then add some overall titles, captioning and formatting.  This example was covered in the excellent [patchwork annotation guide](https://patchwork.data-imaginist.com/articles/guides/annotation.html)
+
+```{r }
+# Change the values for the labels
+# Overall annotation
+
+p + plot_annotation(
+  title = 'Patchwork Went Nerd Viral',
+  caption = 'Source: @littlemissdata'
+) 
+
+
+p + plot_annotation(
+  title = 'Patchwork Went Nerd Viral',
+  caption = 'Source: @littlemissdata'
+) & 
+  theme(text = element_text('mono'))
+```
+
+# Add an image to the patchwork graphic
+
+## Bring in the image
+
+Using an empty plot and the background_image() function, you can bring an image into a graph object.  Further, you can prevent image resizing with the coord_fixed() function.  This is important so the actual image doesn't get resized with the patchwork placement. 
+
+```{r}
+## Add an image
+
+twitter <- image_read('https://raw.githubusercontent.com/lgellis/MiscTutorial/master/Patchwork/twitter_post.png')
+twitter <- ggplot() +
+  background_image(twitter) + coord_fixed()
+```
+
+## Plot the image with patchwork
+
+```{r }
+
+(twitter + p3) / (p1 + p2 )
+pF <- twitter + (p3/ (p1 + p2))
+
+pF + plot_annotation(
+  title = 'Patchwork Went Nerd Viral',
+  caption = 'Source: @littlemissdata'
+) & 
+  theme(text = element_text(family ='mono', size = 9))
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
