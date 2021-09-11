@@ -1,7 +1,7 @@
 ---
 title: "Easy EDA in R using the inspectdf package"
 author: Laura Ellis
-date: May 15 2019
+date: Sept 11 2021
 output:
   md_document:
     variant: markdown_github
@@ -67,13 +67,13 @@ Simply pass in a dataframe, or two (for comparisons) and set show_plot = TRUE.  
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_types(allGrades, show_plot = TRUE)
+inspect_types(allGrades) %>% show_plot()
 ```
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_types(youngGrades, oldGrades, show_plot = TRUE)
+inspect_types(youngGrades, oldGrades) %>% show_plot()
 ```
 
 ## 2 Evaluate the data frame column memory usage with the inspect_mem() function
@@ -81,14 +81,14 @@ inspect_types(youngGrades, oldGrades, show_plot = TRUE)
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_mem(allGrades, show_plot = TRUE)
+inspect_mem(allGrades) %>% show_plot()
 ```
 
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_mem(youngGrades, oldGrades, show_plot = TRUE)
+inspect_mem(youngGrades, oldGrades) %>% show_plot()
 ```
 
 ## 3 Evaluate the na prevelance within the data frame with the inspect_na() function
@@ -96,13 +96,13 @@ inspect_mem(youngGrades, oldGrades, show_plot = TRUE)
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_na(allGrades, show_plot = TRUE)
+inspect_na(allGrades) %>% show_plot()
 ```
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_na(youngGrades, oldGrades, show_plot = TRUE)
+inspect_na(youngGrades, oldGrades) %>% show_plot()
 ```
 
 
@@ -111,13 +111,13 @@ inspect_na(youngGrades, oldGrades, show_plot = TRUE)
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_num(allGrades, show_plot = TRUE)
+inspect_num(allGrades) %>% show_plot()
 ```
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_num(youngGrades, oldGrades, show_plot = TRUE)
+inspect_num(youngGrades, oldGrades) %>% show_plot()
 ```
 
 ## 5 Evaluate for any possible categorical column imbalance with inspect_imb() function to identify factors which might be overly prevalent.
@@ -125,13 +125,13 @@ inspect_num(youngGrades, oldGrades, show_plot = TRUE)
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_imb(allGrades, show_plot = TRUE)
+inspect_imb(allGrades) %>% show_plot()
 ```
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_imb(youngGrades, oldGrades, show_plot = TRUE)
+inspect_imb(youngGrades, oldGrades) %>% show_plot()
 ```
 
 ## 6 Evaluate the categorical column distribution with the inspect_cat() function
@@ -139,13 +139,13 @@ inspect_imb(youngGrades, oldGrades, show_plot = TRUE)
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_cat(allGrades, show_plot = TRUE)
+inspect_cat(allGrades) %>% show_plot()
 ```
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_cat(youngGrades, oldGrades, show_plot = TRUE)
+inspect_cat(youngGrades, oldGrades) %>% show_plot()
 ```
 
 ## 7 Evaluate the column correlations with the inspect_cor() function
@@ -153,13 +153,13 @@ inspect_cat(youngGrades, oldGrades, show_plot = TRUE)
 ### a) Evaluate the full data frame: allGrades
 
 ```{r}
-inspect_cor(allGrades, show_plot = TRUE)
+inspect_cor(allGrades) %>% show_plot()
 ```
 
 ### b) Compare between youngGrades and oldGrades
 
 ```{r}
-inspect_cor(youngGrades, oldGrades, show_plot = TRUE)
+inspect_cor(youngGrades, oldGrades) %>% show_plot()
 ```
 
 
